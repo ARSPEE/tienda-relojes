@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Tienda de Relojes</title>
+  <meta name="description" content="Tienda online de relojes: deportivos, clásicos y de lujo. Envíos en 24-72h." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1115;--card:#151922;--muted:#9aa4b2;--text:#e7ebf4;--brand:#3aa0ff;--brand-2:#6be6a9;--danger:#ff5c5c;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:Poppins,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,#0c0f14,#0f1115 30%);color:var(--text)}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:16px}
+    header{position:sticky;top:0;backdrop-filter:saturate(140%) blur(10px);background:rgba(10,12,16,.6);border-bottom:1px solid #1f2633;z-index:50}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+    .logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:#0a0c10;font-weight:800}
+    .actions{display:flex;gap:8px;align-items:center}
+    .btn{padding:10px 14px;border-radius:12px;border:1px solid #243044;background:#121722;color:var(--text);cursor:pointer}
+    .btn.brand{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0a0c10;border:none}
+    .btn.icon{display:flex;align-items:center;gap:8px}
+
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:center;padding:26px 0}
+    .hero h1{font-size:36px;line-height:1.1;margin:0 0 6px}
+    .hero p{color:var(--muted);margin:0 0 16px}
+    .hero .card{background:radial-gradient(1000px 400px at -10% -50%,rgba(58,160,255,.09),transparent 60%),var(--card);border:1px solid #232a39;border-radius:18px;padding:18px}
+    .hero img{width:100%;border-radius:16px;border:1px solid #232a39}
+
+    .section-title{display:flex;align-items:flex-end;justify-content:space-between;margin:28px 0 12px}
+    .section-title h2{margin:0;font-size:24px}
+    .muted{color:var(--muted)}
+
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    @media (max-width:960px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.grid{grid-template-columns:1fr}.actions .label{display:none}}
+
+    .product{background:linear-gradient(180deg,#141a24,#0f141c);border:1px solid #20293a;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+    .product .thumb{aspect-ratio:1/1;background:#0c0f15;display:grid;place-items:center}
+    .product img{width:100%;height:100%;object-fit:cover}
+    .product .info{padding:12px 12px 10px}
+    .product .name{font-weight:600}
+    .product .meta{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+    .price{font-weight:700}
+    .chip{font-size:12px;color:#c7d2e1;background:#0d141f;border:1px solid #223047;padding:4px 8px;border-radius:999px}
+    .product .buy{padding:10px 12px;display:flex;gap:8px}
+
+    footer{margin-top:40px;border-top:1px solid #20293a}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;padding:22px 0}
+    @media (max-width:760px){.footer-grid{grid-template-columns:1fr}}
+    .mini{font-size:13px;color:var(--muted)}
+
+    /* Cart drawer */
+    .drawer{position:fixed;top:0;right:-420px;width:360px;max-width:85vw;height:100vh;background:#0e131b;border-left:1px solid #223047;transition:right .28s ease;z-index:60;display:flex;flex-direction:column}
+    .drawer.open{right:0}
+    .drawer header{position:sticky;top:0;background:#0f141c;border-bottom:1px solid #1e293a}
+    .cart-items{flex:1;overflow:auto;padding:10px}
+    .cart-empty{padding:20px;text-align:center;color:var(--muted)}
+    .cart-item{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;border:1px solid #1f293a;border-radius:12px;padding:8px;margin:8px 0;background:#0f141a}
+    .cart-item img{width:64px;height:64px;border-radius:10px;object-fit:cover}
+    .qty{display:flex;align-items:center;gap:6px}
+    .qty button{width:26px;height:26px;border-radius:8px;border:1px solid #223047;background:#0f141c;color:var(--text);cursor:pointer}
+    .drawer footer{padding:12px;border-top:1px solid #1f293a}
+    .total{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .whatsapp{display:block;text-align:center;padding:12px;border-radius:12px;background:linear-gradient(135deg,#25D366,#128C7E);color:#0a0c10;font-weight:700}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo">W</div>
+        <div>
+          <div>Watches.pe</div>
+          <div class="mini">Relojes de calidad • Envío nacional</div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn icon" id="btn-catalogo">Catálogo</button>
+        <button class="btn icon" id="btn-carrito">🛒 <span class="label">Carrito</span> <span id="cart-count" class="chip" style="margin-left:6px">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="card">
+        <h1>Relojes que elevan tu estilo</h1>
+        <p>Clásicos, deportivos y resistentes al agua. Pide hoy y recibe entre 24-72h en todo el Perú.</p>
+        <div class="actions">
+          <a href="#catalogo" class="btn brand">Ver colección</a>
+          <a href="#contacto" class="btn">Más info</a>
+        </div>
+      </div>
+      <img src="https://images.unsplash.com/photo-1518546305927-5a555bb7020a?q=80&w=1600&auto=format&fit=crop" alt="Reloj en primer plano" loading="lazy" />
+    </section>
+
+    <div class="section-title">
+      <h2 id="catalogo">Colección destacada</h2>
+      <span class="muted">Hecho para uso diario y aventuras</span>
+    </div>
+
+    <section class="grid" id="products">
+      <!-- Productos se inyectan por JS -->
+    </section>
+
+    <footer id="contacto">
+      <div class="footer-grid">
+        <div>
+          <h3>Watches.pe</h3>
+          <p class="mini">Garantía 6 meses. Cambios y devoluciones dentro de 7 días. Atención por WhatsApp de 9am a 8pm.</p>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <p class="mini">WhatsApp: <a href="https://wa.me/" target="_blank" rel="noreferrer">+51 900 000 000</a><br/>Email: ventas@watches.pe</p>
+        </div>
+        <div>
+          <h4>Políticas</h4>
+          <p class="mini"><a href="#">Envíos</a> • <a href="#">Devoluciones</a> • <a href="#">Privacidad</a></p>
+        </div>
+      </div>
+      <div class="mini" style="padding-bottom:22px">© <span id="year"></span> Watches.pe – Todos los derechos reservados</div>
+    </footer>
+  </main>
+
+  <!-- Drawer del carrito -->
+  <aside class="drawer" id="drawer">
+    <header>
+      <div class="container nav" style="padding:12px 16px">
+        <strong>Tu carrito</strong>
+        <button class="btn" id="btn-close">Cerrar</button>
+      </div>
+    </header>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">Tu carrito está vacío.</div>
+    </div>
+    <footer>
+      <div class="total"><span>Total</span><strong id="total">S/ 0.00</strong></div>
+      <a id="checkoutWhatsApp" class="whatsapp" href="#" target="_blank" rel="noreferrer">Finalizar por WhatsApp</a>
+    </footer>
+  </aside>
+
+  <script>
+    const soles = (n)=>`S/ ${n.toFixed(2)}`;
+    const state = {
+      phone: '+51900000000', // <-- Cambia a tu número con código de país
+      items: [],
+      products: [
+        {id:'w1', name:'AquaSport 200', price:169.90, tag:'Resistente 5ATM', img:'https://images.unsplash.com/photo-1601933470928-c1a5f593d345?q=80&w=1200&auto=format&fit=crop'},
+        {id:'w2', name:'Classic Steel', price:219.00, tag:'Acero Inox.', img:'https://images.unsplash.com/photo-1524594150401-1e251807ec7b?q=80&w=1200&auto=format&fit=crop'},
+        {id:'w3', name:'Urban Chrono', price:259.90, tag:'Cronógrafo', img:'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1200&auto=format&fit=crop'},
+        {id:'w4', name:'Minimal Black', price:189.50, tag:'Diseño minimal', img:'https://images.unsplash.com/photo-1511376777868-611b54f68947?q=80&w=1200&auto=format&fit=crop'},
+        {id:'w5', name:'Explorer Pro', price:289.00, tag:'24h batería', img:'https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=1200&auto=format&fit=crop'},
+        {id:'w6', name:'Rose Gold Femme', price:199.90, tag:'Tono rosé', img:'https://images.unsplash.com/photo-1549488497-25679528f2aa?q=80&w=1200&auto=format&fit=crop'},
+        {id:'w7', name:'Field Khaki', price:179.00, tag:'Correa tela', img:'https://images.unsplash.com/photo-1526045478516-99145907023c?q=80&w=1200&auto=format&fit=crop'},
+        {id:'w8', name:'Titan X', price:349.00, tag:'Ligero & fuerte', img:'https://images.unsplash.com/photo-1516575901726-efcb7a9895a5?q=80&w=1200&auto=format&fit=crop'}
+      ]
+    };
+
+    const els = {
+      grid: document.querySelector('#products'),
+      count: document.querySelector('#cart-count'),
+      drawer: document.querySelector('#drawer'),
+      cartItems: document.querySelector('#cartItems'),
+      total: document.querySelector('#total'),
+      checkout: document.querySelector('#checkoutWhatsApp')
+    };
+
+    const save = ()=>localStorage.setItem('cart', JSON.stringify(state.items));
+    const load = ()=>{try{state.items = JSON.parse(localStorage.getItem('cart'))||[]}catch{state.items=[]}};
+
+    function renderProducts(){
+      els.grid.innerHTML = state.products.map(p=>`
+        <article class="product">
+          <div class="thumb"><img loading="lazy" src="${p.img}" alt="${p.name}"/></div>
+          <div class="info">
+            <div class="name">${p.name}</div>
+            <div class="meta">
+              <span class="price">${soles(p.price)}</span>
+              <span class="chip">${p.tag}</span>
+            </div>
+          </div>
+          <div class="buy">
+            <button class="btn brand" onclick='addToCart("${p.id}")'>Añadir al carrito</button>
+            <button class="btn" onclick='buyNow("${p.id}")'>Comprar ahora</button>
+          </div>
+        </article>`).join('');
+    }
+
+    function addToCart(id){
+      const found = state.items.find(i=>i.id===id);
+      if(found){found.qty+=1}else{
+        const p = state.products.find(x=>x.id===id);
+        state.items.push({id:p.id,name:p.name,price:p.price,img:p.img,qty:1});
+      }
+      updateCart();
+    }
+    function removeFromCart(id){
+      state.items = state.items.filter(i=>i.id!==id); updateCart();
+    }
+    function changeQty(id,delta){
+      const it = state.items.find(i=>i.id===id); if(!it) return;
+      it.qty = Math.max(1, it.qty+delta); updateCart();
+    }
+
+    function updateCart(){
+      save();
+      const count = state.items.reduce((a,b)=>a+b.qty,0);
+      els.count.textContent = count;
+      if(state.items.length===0){
+        els.cartItems.innerHTML = '<div class="cart-empty">Tu carrito está vacío.</div>';
+        els.total.textContent = soles(0);
+      } else {
+        els.cartItems.innerHTML = state.items.map(i=>`
+          <div class="cart-item">
+            <img src="${i.img}" alt="${i.name}"/>
+            <div>
+              <div style="font-weight:600">${i.name}</div>
+              <div class="mini">${soles(i.price)} x ${i.qty}</div>
+              <div class="qty">
+                <button onclick='changeQty("${i.id}", -1)'>-</button>
+                <span>${i.qty}</span>
+                <button onclick='changeQty("${i.id}", 1)'>+</button>
+                <button class="btn" style="margin-left:auto" onclick='removeFromCart("${i.id}")'>Quitar</button>
+              </div>
+            </div>
+            <div><strong>${soles(i.price*i.qty)}</strong></div>
+          </div>`).join('');
+        const total = state.items.reduce((a,b)=>a+b.price*b.qty,0);
+        els.total.textContent = soles(total);
+      }
+      const text = encodeURIComponent(buildOrderText());
+      els.checkout.href = `https://wa.me/${state.phone}?text=${text}`;
+    }
+
+    function buildOrderText(){
+      if(state.items.length===0) return 'Hola, quiero consultar sobre sus relojes.';
+      const lines = state.items.map(i=>`• ${i.name} x${i.qty} — ${soles(i.price*i.qty)}`);
+      const total = state.items.reduce((a,b)=>a+b.price*b.qty,0);
+      return `Hola, quiero comprar:\n${lines.join('\n')}\nTotal: ${soles(total)}\n\nNombre: \nDistrito: \nMétodo de pago:`;
+    }
+
+    function buyNow(id){
+      state.items=[{...state.products.find(p=>p.id===id), qty:1}];
+      updateCart();
+      openDrawer();
+    }
+
+    function openDrawer(){els.drawer.classList.add('open')}
+    function closeDrawer(){els.drawer.classList.remove('open')}
+
+    // Event listeners
+    document.getElementById('btn-carrito').addEventListener('click', openDrawer);
+    document.getElementById('btn-close').addEventListener('click', closeDrawer);
+    document.getElementById('btn-catalogo').addEventListener('click', ()=>{
+      document.querySelector('#catalogo').scrollIntoView({behavior:'smooth'});
+    });
+
+    // Init
+    load();
+    renderProducts();
+    updateCart();
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
